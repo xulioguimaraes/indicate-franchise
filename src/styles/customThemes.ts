@@ -5,9 +5,8 @@ export const customTheme = extendTheme({
     global: {
       body: {
         backgroundColor: "#eae7e6",
-        padding: 0
+        padding: 0,
       },
-     
     },
   },
 });
