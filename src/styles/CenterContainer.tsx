@@ -5,7 +5,7 @@ export const CenterContainer = styled(Flex, {
     justifyContent: "center",
     alignItems: "center",
    
-    w: "100vw",
+    // w: "100vw",
     overflowX: "hidden",
   },
 });

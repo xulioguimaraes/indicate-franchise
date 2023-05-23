@@ -26,14 +26,16 @@ export const Home = () => {
   const navigate = useNavigate();
   return (
     <>
-      <Box
-        pos={"absolute"}
-        bgColor={"#ffbdda"}
-        w={"100vw"}
-        overflow={"hidden"}
-        height={"48%"}
-      />
       <FlexContainer>
+        <Box
+          pos={"absolute"}
+          bgColor={"#ffbdda"}
+          w={"100vw"}
+          overflow={"hidden"}
+          height={"48%"}
+          top={0}
+          zIndex={-1}
+        />
         <Container maxW={"7xl"} mt={[16, 0]}>
           <Stack
             align={"center"}
@@ -64,12 +66,7 @@ export const Home = () => {
                   Indique e seja
                 </Text>
                 <br />
-                <Text
-                  
-                  pos={"relative"}
-                  as={"span"}
-                  color={ROSEPRIMARY}
-                >
+                <Text pos={"relative"} as={"span"} color={ROSEPRIMARY}>
                   recompensado!
                 </Text>
               </Heading>
