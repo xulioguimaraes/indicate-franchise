@@ -15,6 +15,7 @@ import { PlayIcon } from "./icons/PlayIcon";
 import { useNavigate } from "react-router-dom";
 import { FlexContainer } from "../../styles/FlexContainer";
 import { ROSEPRIMARY } from "../../styles/customThemes";
+import { PinkBackgroud } from "../../styles/PinkBackgroud";
 
 // position: absolute;
 // background: aqua;
@@ -27,15 +28,7 @@ export const Home = () => {
   return (
     <>
       <FlexContainer>
-        <Box
-          pos={"absolute"}
-          bgColor={"#ffbdda"}
-          w={"100vw"}
-          overflow={"hidden"}
-          height={"48%"}
-          top={0}
-          zIndex={-1}
-        />
+        <PinkBackgroud/>
         <Container maxW={"7xl"} mt={[16, 0]}>
           <Stack
             align={"center"}

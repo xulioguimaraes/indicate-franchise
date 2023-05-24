@@ -1,3 +1,4 @@
+/* eslint-disable no-extra-boolean-cast */
 import {
   Box,
   Button,
@@ -6,20 +7,13 @@ import {
   FormLabel,
   Input,
   FormHelperText,
-  Container,
   Select,
   Stack,
   chakra,
 } from "@chakra-ui/react";
 import InputMask from "react-input-mask";
 
-import {
-  useForm,
-  UseFormRegister,
-  SubmitHandler,
-  Controller,
-  FieldErrors,
-} from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useToast } from "@chakra-ui/react";
@@ -27,8 +21,10 @@ import { ROSEPRIMARY } from "../../styles/customThemes";
 import { CenterContainer } from "../../styles/CenterContainer";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { object, z } from "zod";
+import { z } from "zod";
 import { api } from "../../services/axios";
+import { useNavigate } from "react-router-dom";
+import { PinkBackgroud } from "../../styles/PinkBackgroud";
 
 interface ResposneGetStates {
   id: number;
@@ -76,8 +72,6 @@ const registerFormSchema = z.object({
     { message: "Data de nascimento inválida" }
   ),
 });
-type RegisterFormAttributes = keyof RegisterFormData;
-type RegisterFormAttributesArray = Array<RegisterFormAttributes>;
 type RegisterFormData = z.infer<typeof registerFormSchema>;
 
 export const InfluencerForm = () => {
@@ -89,7 +83,7 @@ export const InfluencerForm = () => {
     register,
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerFormSchema),
   });
@@ -119,6 +113,7 @@ export const InfluencerForm = () => {
         status: "error",
         duration: 3000,
         isClosable: true,
+        position: "top",
       });
       console.log(error);
     } finally {
@@ -145,6 +140,7 @@ export const InfluencerForm = () => {
         status: "error",
         duration: 3000,
         isClosable: true,
+        position: "top",
       });
       console.log(error);
     } finally {
@@ -170,6 +166,7 @@ export const InfluencerForm = () => {
         status: "error",
         duration: 3000,
         isClosable: true,
+        position: "top",
       });
       console.log(error);
     } finally {
@@ -182,23 +179,66 @@ export const InfluencerForm = () => {
     getState();
   }, []);
   const toast = useToast();
-
-  const onSubmit = (data: RegisterFormData) => {
-    console.log(data);
+  const navigate = useNavigate();
+  const onSubmit = async ({
+    cpf,
+    date_of_birth,
+    email,
+    name,
+    city_id,
+    profile_indicate,
+    uf_id,
+  }: RegisterFormData) => {
+    try {
+      const response = await api.post("/franchise/create-indicate", {
+        cpf,
+        date_of_birth,
+        email,
+        name,
+        city_id,
+        profile_indicate,
+        uf_id,
+      });
+      toast({
+        title: "Cadastro realizado.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+        position: "top",
+      });
+      navigate(`/cadastro-realizado/${response.data.slug}`);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        // Acessar a propriedade response do erro
+        if (error?.response?.data?.message) {
+          error?.response?.data?.message.map((item: string) => {
+            toast({
+              title: item,
+              description: "Verifique as informações e tente novamente",
+              status: "error",
+              duration: 3000,
+              isClosable: true,
+              position: "top",
+            });
+          });
+          return;
+        }
+        toast({
+          title: "Verifique as informações e tente novamente",
+          description: `${error}`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
+      }
+    }
   };
-  console.log(errors);
+
   return (
     <>
       <CenterContainer zIndex={2} overflowX={"hidden"}>
-        <Box
-          pos={"absolute"}
-          bgColor={"#ffbdda"}
-          w={"100vw"}
-          overflow={"hidden"}
-          height={"48%"}
-          top={0}
-          zIndex={-1}
-        />
+        <PinkBackgroud />
         <chakra.div maxW={"7xl"} w={"full"} zIndex={2} mt={[16, 0]}>
           <Box
             borderWidth="1px"
@@ -348,6 +388,7 @@ export const InfluencerForm = () => {
               color={"white"}
               w={"full"}
               type="submit"
+              isLoading={isSubmitting}
               // onClick={() => {
               //   toast({
               //     title: "Account created.",
