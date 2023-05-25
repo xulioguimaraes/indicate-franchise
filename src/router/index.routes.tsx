@@ -3,6 +3,7 @@ import { Home } from "../views/home/Home";
 import { KnowMore } from "../views/knowmore/KnowMore";
 import { InfluencerForm } from "../views/influencer-form/InfluencerForm";
 import { RegistrationDone } from "../views/registration-done/RegistrationDone";
+import { Franchise } from "../views/franchise/Franchise";
 
 export const router = createBrowserRouter([
   {
@@ -21,4 +22,9 @@ export const router = createBrowserRouter([
     path: "/cadastro-realizado/:slug",
     element: <RegistrationDone />,
   },
+  {
+    path: "/franquia/:slug",
+    element: <Franchise />,
+  },
+
 ]);
