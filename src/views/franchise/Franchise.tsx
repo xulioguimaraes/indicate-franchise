@@ -3,14 +3,10 @@ import {
   Button,
   Container,
   Flex,
-  Img,
-  Stack,
   Text,
-  VStack,
   useBreakpointValue,
 } from "@chakra-ui/react";
 import loja from "../../assets/loja.webp";
-import { motion } from "framer-motion";
 import { ROSEPRIMARY } from "../../styles/customThemes";
 import { PinkBackgroud } from "../../styles/PinkBackgroud";
 
