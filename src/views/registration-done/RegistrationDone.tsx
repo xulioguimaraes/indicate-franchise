@@ -18,7 +18,9 @@ export const RegistrationDone = () => {
   const params = useParams<{
     slug: string;
   }>();
-  const link = `http://localhost:5173/franquia/${params.slug}`;
+  
+  // const link = `http://localhost:5173/franquia/${params.slug}`;
+  const link = `https://indicate-franchise.vercel.app/franquia/${params.slug}`;
   const toast = useToast();
   const handleCopy = async () => {
     try {
